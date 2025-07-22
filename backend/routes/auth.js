@@ -39,6 +39,8 @@ router.post("/login", async (req, res) => {
 
     // Check password
     const isMatch = await bcrypt.compare(password, user.password);
+
+    //return with error message if the password doesn't match
     if (!isMatch)
       return res.status(400).json({ message: "Invalid credentials" });
 
@@ -49,7 +51,21 @@ router.post("/login", async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    res.json({ token, user: user });
+    res.json({
+      token,
+      user: {
+        username: user.username,
+        role: user.role,
+        email: user.email,
+        id: user._id,
+      },
+    });
+    // res.cookie("authToken", token, {
+    //   httpOnly: true,
+    //   secure: true,
+    //   expires: new Date(Date.now() + 3600000), // in one hour
+    // });
+    res.status(200).json({ message: "Login successful" });
   } catch (error) {
     res.status(500).json({ message: "Server error" });
   }

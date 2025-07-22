@@ -7,7 +7,10 @@ import cors from "cors";
 import authRoutes from "./routes/auth.js";
 import ticketRoutes from "./routes/tickets.js";
 
+// Load environment variables from .env file
 dotenv.config();
+
+// Create an instance of the Express.js web framework to handle HTTP requests and responses.
 const app = express();
 
 // Middleware
