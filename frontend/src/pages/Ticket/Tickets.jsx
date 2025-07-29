@@ -14,17 +14,26 @@ import {
 export default function Tickets() {
   const [tickets, setTickets] = useState([]);
   const [loading, setLoading] = useState(true);
-  const userData = localStorage.getItem("userData");
+  // const userData = localStorage.getItem("userData");
 
   const getTickets = async () => {
     try {
-      const token = JSON?.parse(userData)?.token;
+      // This method is for tokens that are stored in localStorage
+      // const token = JSON?.parse(userData)?.token;
+      // const response = await fetch("http://localhost:5000/api/tickets", {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      // });
+      // This method is for tokens that are stored in cookies
       const response = await fetch("http://localhost:5000/api/tickets", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        credentials: "include", // Include cookies in the request
       });
       const data = await response.json();
+      if (!response.ok) {
+        throw new Error("Failed to fetch tickets");
+        return;
+      }
       setTickets(data);
     } catch (error) {
       console.error("Error fetching tickets:", error);
@@ -66,10 +75,10 @@ export default function Tickets() {
         gutterBottom
         sx={{ fontWeight: 700 }}
       >
-        Support Tickets
+        Tickets
       </Typography>
 
-      {tickets.length === 0 ? (
+      {tickets?.length === 0 ? (
         <Box textAlign="center" py={10}>
           <Typography variant="h6" color="textSecondary">
             No tickets found
@@ -77,7 +86,7 @@ export default function Tickets() {
         </Box>
       ) : (
         <Grid container spacing={3}>
-          {tickets.map((ticket) => (
+          {tickets?.map((ticket) => (
             <Grid item xs={12} sm={6} md={4} key={ticket._id}>
               <Card
                 elevation={3}

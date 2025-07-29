@@ -38,11 +38,12 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
+      await axios.post(
         "http://localhost:5000/api/auth/login",
-        { email, password }
+        { email, password },
+        { withCredentials: true }
       );
-      localStorage?.setItem("userData", JSON.stringify(response.data));
+      // localStorage?.setItem("userData", JSON.stringify(response.data));
       navigate("/");
     } catch (error) {
       alert(error?.response?.data?.message);

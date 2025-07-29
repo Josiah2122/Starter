@@ -51,24 +51,34 @@ router.post("/login", async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    res.json({
-      token,
-      user: {
-        username: user.username,
-        role: user.role,
-        email: user.email,
-        id: user._id,
-      },
-    });
-    // res.cookie("authToken", token, {
-    //   httpOnly: true,
-    //   secure: true,
-    //   expires: new Date(Date.now() + 3600000), // in one hour
+    // Send response with the token and user data to store in localStorage
+    // res.json({
+    //   token,
+    //   user: {
+    //     username: user.username,
+    //     role: user.role,
+    //     email: user.email,
+    //     id: user._id,
+    //   },
     // });
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      expires: new Date(Date.now() + 3600000), // in one hour
+    });
     res.status(200).json({ message: "Login successful" });
   } catch (error) {
     res.status(500).json({ message: "Server error" });
   }
+});
+
+router.post("/logout", (req, res) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+  });
+  res.json({ message: "Logged out" });
 });
 
 export default router;
