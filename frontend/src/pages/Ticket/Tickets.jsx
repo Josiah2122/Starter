@@ -9,6 +9,7 @@ import {
   LinearProgress,
   Typography,
 } from "@mui/material";
+import { toast } from "react-toastify";
 // import { format } from "date-fns";
 
 export default function Tickets() {
@@ -30,9 +31,10 @@ export default function Tickets() {
         credentials: "include", // Include cookies in the request
       });
       const data = await response.json();
-      if (!response.ok) {
+      if (!response?.ok) {
+        console.log("Error fetching tickets:", data.message);
+        toast.error("Error fetching tickets:", data.message);
         throw new Error("Failed to fetch tickets");
-        return;
       }
       setTickets(data);
     } catch (error) {
