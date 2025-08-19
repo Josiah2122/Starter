@@ -2,6 +2,7 @@ import express from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
+import authMiddleware from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
@@ -70,6 +71,12 @@ router.post("/login", async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Server error" });
   }
+});
+
+// Add this route to your auth routes
+router.get("/me", authMiddleware, (req, res) => {
+  if (!req.user) return res.status(401).json({ error: "Not authenticated" });
+  res.json(req.user);
 });
 
 router.post("/logout", (req, res) => {

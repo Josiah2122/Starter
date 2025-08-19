@@ -32,8 +32,7 @@ export default function Tickets() {
       });
       const data = await response.json();
       if (!response?.ok) {
-        console.log("Error fetching tickets:", data.message);
-        toast.error("Error fetching tickets:", data.message);
+        toast.error(data?.message);
         throw new Error("Failed to fetch tickets");
       }
       setTickets(data);
