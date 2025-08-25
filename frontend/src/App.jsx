@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import ProtectedRoute from "./ProtectedRoute";
+import Layout from "../components/Layout";
 
 const theme = createTheme({
   palette: {
@@ -43,14 +44,20 @@ export default function App() {
         />
         <Routes>
           <Route path="/login" element={<Login />} />
+
+          {/* Protected Routes */}
           <Route
-            path="/"
             element={
               <ProtectedRoute>
-                <Dashboard />
+                <Layout />
               </ProtectedRoute>
             }
-          />
+          >
+            <Route path="/" element={<Dashboard />} />
+            {/* Add more protected routes here, e.g.:
+            <Route path="/settings" element={<Settings />} />
+            */}
+          </Route>
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
