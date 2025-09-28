@@ -28,6 +28,10 @@ import InventoryIcon from "@mui/icons-material/Inventory";
 import PaymentIcon from "@mui/icons-material/Payment";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 
+// add import for the new AccountMenu
+import AccountMenu from "./AccountMenu";
+import { Stack } from "@mui/material";
+
 const drawerWidth = 240;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -325,25 +329,34 @@ export default function Layout() {
         sx={{ background: "#1e293b", color: "#fff", boxShadow: "none" }}
       >
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{ mr: 2, ...(open && { display: "none" }) }}
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            sx={{ width: "100%" }}
           >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ color: "#e2e8f0", fontWeight: 700 }}
-          >
-            {location?.pathname === "/"
-              ? "Small Stock"
-              : location?.state?.label || "Back"}
-          </Typography>
+            <>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                onClick={handleDrawerOpen}
+                edge="start"
+                sx={{ mr: 2, ...(open && { display: "none" }) }}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                sx={{ color: "#e2e8f0", fontWeight: 700, ml: 2 }}
+              >
+                {location?.pathname === "/"
+                  ? "Small Stock"
+                  : location?.state?.label || "Back"}
+              </Typography>
+            </>
+            <AccountMenu />
+          </Stack>
         </Toolbar>
       </AppBar>
       <Drawer
