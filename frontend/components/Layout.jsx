@@ -24,7 +24,6 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 // Icons import
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import SettingsIcon from "@mui/icons-material/Settings";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import PaymentIcon from "@mui/icons-material/Payment";
 import AssessmentIcon from "@mui/icons-material/Assessment";
@@ -60,7 +59,7 @@ const AppBar = styled(MuiAppBar, {
   ...(open && {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: `${drawerWidth}px`,
-    borderRadius: "0 0 28px 28px", // Rounded corners for the AppBar
+    borderRadius: "0 0 4px 4px", // Rounded corners for the AppBar
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
@@ -79,27 +78,8 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 const menuItems = [
   {
     text: "Dashboard",
-    icon: <InboxIcon />,
+    icon: <InboxIcon sx={{ color: "white" }} />,
     route: "/",
-  },
-  {
-    text: "Procurement Mgmt.",
-    icon: <ShoppingCartIcon />,
-    subItems: [
-      {
-        text: "Purchase",
-        subItems: [
-          {
-            text: "Purchase",
-            route: "/purchase",
-          },
-          {
-            text: "Purchase List",
-            route: "/purchase_list",
-          },
-        ],
-      },
-    ],
   },
   {
     text: "Payment",
@@ -150,19 +130,6 @@ const menuItems = [
           },
         ],
       },
-      {
-        text: "Sale",
-        subItems: [
-          {
-            text: "Sale",
-            route: "/sale",
-          },
-          {
-            text: "Sale List",
-            route: "/sale_list",
-          },
-        ],
-      },
     ],
   },
   {
@@ -175,23 +142,6 @@ const menuItems = [
           {
             text: "Company Settings",
             route: "/settings/general/company",
-          },
-          {
-            text: "Supplier",
-            subItems: [
-              {
-                text: "Supplier",
-                route: "/supplier",
-              },
-              {
-                text: "Supplier List",
-                route: "/supplier_list",
-              },
-            ],
-          },
-          {
-            text: "Unit",
-            route: "/unit",
           },
           {
             text: "Banks",
@@ -288,33 +238,6 @@ const menuItems = [
         route: "/report/inventory",
       },
       {
-        text: "Category-Based Reports",
-        route: "/report/category",
-        subItems: [
-          {
-            text: "Purchase Related ",
-            route: "/report/purchase",
-          },
-          {
-            text: "Sale Related ",
-            route: "/report/sale",
-          },
-        ],
-      },
-      {
-        text: "Comparision Report",
-        subItems: [
-          {
-            text: "Item Lists",
-            route: "/report/item_list",
-          },
-          {
-            text: "Site List",
-            route: "/report/site",
-          },
-        ],
-      },
-      {
         text: "Suppliers Report",
         route: "/report/supplier",
       },
@@ -353,12 +276,16 @@ export default function Layout() {
                 onClick={() => handleMenuClick(item.text)}
                 sx={{ pl: 2 + level * 2 }}
               >
-                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemIcon sx={{ color: "white" }}>{item.icon}</ListItemIcon>
                 <ListItemText
                   primary={item.text}
                   primaryTypographyProps={{ style: { color: "#e2e8f0" } }}
                 />
-                {openMenus[item.text] ? <ExpandLess /> : <ExpandMore />}
+                {openMenus[item.text] ? (
+                  <ExpandLess sx={{ color: "white" }} />
+                ) : (
+                  <ExpandMore sx={{ color: "white" }} />
+                )}
               </ListItemButton>
             ) : (
               <ListItemButton
@@ -426,7 +353,7 @@ export default function Layout() {
           "& .MuiDrawer-paper": {
             width: drawerWidth,
             boxSizing: "border-box",
-            background: open ? "#1e293b" : "transparent",
+            background: open ? "#1E293B" : "transparent",
             border: "none",
             boxShadow: "none",
             transition: "background 0.2s",
