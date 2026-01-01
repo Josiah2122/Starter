@@ -20,6 +20,7 @@ import loginImage from "../images/loginImage.jpg";
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import "./Login.css";
+import MyButton from "../../components/ui/MyButton";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -461,6 +462,10 @@ export default function Login() {
                   >
                     Log in
                   </Button>
+                  <MyButton
+                    label="testing"
+                    onClick={() => console.log("test done")}
+                  />
 
                   <Stack direction="row" justifyContent="space-between">
                     <Button
